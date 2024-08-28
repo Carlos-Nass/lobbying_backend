@@ -1,34 +1,36 @@
 package com.example.lobbying.controller;
 
-import com.example.lobbying.vacancy.Vacancy;
-import com.example.lobbying.vacancy.VacancyRepository;
-import com.example.lobbying.vacancy.VacancyRequestDTO;
-import com.example.lobbying.vacancy.VacancyResponseDTO;
+import com.example.lobbying.vacancy.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("vacancy")
 public class VacancyController {
 
     @Autowired
-    private VacancyRepository repository;
+    private VacancyService vacancyService;
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
-    public void saveFood(@RequestBody VacancyRequestDTO data){
-        Vacancy vacancyData = new Vacancy(data);
-        repository.save(vacancyData);
-        return;
+    public ResponseEntity<Vacancy> create(@RequestBody VacancyRequestDTO body){
+        Vacancy newVacancy = this.vacancyService.createVacancy(body);
+        return ResponseEntity.ok(newVacancy);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public List<VacancyResponseDTO> getAll(){
 
-        List<VacancyResponseDTO> vacancyList = repository.findAll().stream().map(VacancyResponseDTO::new).toList();
-        return vacancyList;
+        return vacancyService.getVacancies();
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteVacancy(@PathVariable Long id){
+        vacancyService.deleteVacancy(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

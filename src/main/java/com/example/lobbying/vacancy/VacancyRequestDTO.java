@@ -1,4 +1,4 @@
 package com.example.lobbying.vacancy;
 
-public record VacancyRequestDTO(String title, String description) {
+public record VacancyRequestDTO(Long id, String title, String description) {
 }
