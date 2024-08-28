@@ -37,6 +37,16 @@ public class VacancyService {
 
     }
 
+    public Vacancy updateVacancy(Long id, Vacancy vacancy){
+        Vacancy savedVacancy = repository.findById(id).orElseThrow(() -> new RuntimeException("Timeout"));
+        savedVacancy.setTitle(vacancy.getTitle());
+        savedVacancy.setDescription(vacancy.getDescription());
+
+        repository.save(savedVacancy);
+        return savedVacancy;
+
+    }
+
     public Optional<Vacancy> findById(Long id){
         return repository.findById(id);
     }

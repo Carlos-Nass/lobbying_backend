@@ -2,11 +2,11 @@ package com.example.lobbying.controller;
 
 import com.example.lobbying.vacancy.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("vacancy")
@@ -16,7 +16,7 @@ public class VacancyController {
     private VacancyService vacancyService;
 
     @PostMapping
-    public ResponseEntity<Vacancy> create(@RequestBody VacancyRequestDTO body){
+    public ResponseEntity<Vacancy> createVacancy(@RequestBody VacancyRequestDTO body){
         Vacancy newVacancy = this.vacancyService.createVacancy(body);
         return ResponseEntity.ok(newVacancy);
     }
@@ -25,6 +25,12 @@ public class VacancyController {
     public List<VacancyResponseDTO> getAll(){
 
         return vacancyService.getVacancies();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Vacancy> updateVacancy(@PathVariable Long id, @RequestBody Vacancy vacancy){
+        Vacancy updatedVacancy = vacancyService.updateVacancy(id, vacancy);
+        return new ResponseEntity<>(updatedVacancy, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
