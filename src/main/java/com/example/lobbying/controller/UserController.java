@@ -1,10 +1,9 @@
 package com.example.lobbying.controller;
 
-import com.example.lobbying.user.User;
-import com.example.lobbying.user.UserRepository;
-import com.example.lobbying.user.UserRequestDTO;
-import com.example.lobbying.user.UserResponseDTO;
+import com.example.lobbying.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,21 +13,30 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserRepository repository;
+    private UserService userService;
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
-    public void saveUser(@RequestBody UserRequestDTO data){
-        User userData = new User(data);
-        repository.save(userData);
-        return;
+    public ResponseEntity<User> createUser(@RequestBody UserRequestDTO body){
+        User newUser = this.userService.createUser(body);
+        return ResponseEntity.ok(newUser);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public List<UserResponseDTO> getAll(){
 
-        List<UserResponseDTO> userList = repository.findAll().stream().map(UserResponseDTO::new).toList();
-        return userList;
+        return userService.getUsers();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user){
+        User updateUser = userService.updateUser(id, user);
+        return new ResponseEntity<>(updateUser, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id){
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
