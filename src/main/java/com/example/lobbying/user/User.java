@@ -22,7 +22,10 @@ public class User {
     private String password;
     private Integer role;
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany
+    @JoinTable(name = "users_tags",
+            joinColumns = @JoinColumn(name = "id_user"),
+            inverseJoinColumns = @JoinColumn(name = "id_tags"))
     List<Tag> tags;
 
 }

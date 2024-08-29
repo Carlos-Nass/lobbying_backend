@@ -1,6 +1,7 @@
 package com.example.lobbying.tag;
 
 import com.example.lobbying.user.User;
+import com.example.lobbying.vacancy.Vacancy;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,10 +20,9 @@ public class Tag {
     private Long id;
     private String name;
 
-    @ManyToMany
-    @JoinTable(name = "tags_users",
-            joinColumns = @JoinColumn(name = "id_tag"),
-            inverseJoinColumns = @JoinColumn(name = "id_user"))
+    @ManyToMany(mappedBy = "tags")
     List<User> users;
 
+    @ManyToMany(mappedBy = "tags")
+    List<Vacancy> vacancies;
 }
