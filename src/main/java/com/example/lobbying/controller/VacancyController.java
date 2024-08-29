@@ -1,6 +1,9 @@
 package com.example.lobbying.controller;
 
 import com.example.lobbying.vacancy.*;
+import com.example.lobbying.vacancy.dto.VacancyDTO;
+import com.example.lobbying.vacancy.dto.VacancyRequestDTO;
+import com.example.lobbying.vacancy.dto.VacancyResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +19,8 @@ public class VacancyController {
     private VacancyService vacancyService;
 
     @PostMapping
-    public ResponseEntity<Vacancy> createVacancy(@RequestBody VacancyRequestDTO body){
-        Vacancy newVacancy = this.vacancyService.createVacancy(body);
+    public ResponseEntity<VacancyResponseDTO> createVacancy(@RequestBody VacancyRequestDTO body){
+        VacancyResponseDTO newVacancy = this.vacancyService.createVacancy(body);
         return ResponseEntity.ok(newVacancy);
     }
 
@@ -37,6 +40,11 @@ public class VacancyController {
     public ResponseEntity<Void> deleteVacancy(@PathVariable Long id){
         vacancyService.deleteVacancy(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/load-vacancys-by-tags")
+    public List<VacancyDTO> loadVacanciesByTags(@RequestParam("userId") Long userId) {
+        return this.vacancyService.loadVacanciesByTags(userId);
     }
 
 }
