@@ -1,7 +1,6 @@
 package com.example.lobbying.vacancy.dto;
 
 import com.example.lobbying.generic.GenericDTO;
-import com.example.lobbying.user.UserResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
