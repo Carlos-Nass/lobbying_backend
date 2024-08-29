@@ -5,7 +5,6 @@ import com.example.lobbying.tag.Tag;
 import com.example.lobbying.tag.TagRepository;
 import com.example.lobbying.user.User;
 import com.example.lobbying.user.UserRepository;
-import com.example.lobbying.user.UserResponseDTO;
 import com.example.lobbying.vacancy.dto.VacancyDTO;
 import com.example.lobbying.vacancy.dto.VacancyRequestDTO;
 import com.example.lobbying.vacancy.dto.VacancyResponseDTO;
