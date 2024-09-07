@@ -1,8 +1,10 @@
 package com.example.lobbying.user;
 
-public record UserResponseDTO(Long id, String name, String surname, String password, Integer role) {
-    public UserResponseDTO(User user){
-        this(user.getId(), user.getName(), user.getSurname(), user.getPassword(), user.getRole());
+public record UserResponseDTO(Long id, String name, String surname, String email, String password, Integer role, String token) {
+
+    public UserResponseDTO(User user, String token){
+        this(user.getId(), user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getRole(), token);
     }
+
 }
 

@@ -1,12 +1,16 @@
 package com.example.lobbying.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class UserService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository repository;
@@ -17,7 +21,8 @@ public class UserService {
 
         newUser.setName(data.name());
         newUser.setSurname(data.surname());
-        newUser.setPassword(data.password());
+        newUser.setEmail(data.email());
+        newUser.setPassword(passwordEncoder.encode(data.password()));
         newUser.setRole(0);
 
         repository.save(newUser);
@@ -25,9 +30,9 @@ public class UserService {
         return  newUser;
     }
 
-    public List<UserResponseDTO> getUsers(){
+    public List<User> getUsers(){
 
-        return repository.findAll().stream().map(UserResponseDTO::new).toList();
+        return repository.findAll();
     }
 
     public void deleteUser(Long id){
@@ -39,6 +44,7 @@ public class UserService {
         User savedUser = repository.findById(id).orElseThrow(() -> new RuntimeException("Timeout"));
         savedUser.setName(user.getName());
         savedUser.setSurname(user.getSurname());
+        savedUser.setEmail(user.getEmail());
         savedUser.setPassword(user.getPassword());
 
         repository.save(savedUser);
