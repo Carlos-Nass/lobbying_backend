@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -42,6 +44,35 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/auth/login")
+    public ResponseEntity<Object> loginUser(@RequestBody UserRequestDTO body){
+        Optional<User> optionalUser = this.userService.findByEmail(body.email());
+
+        if (optionalUser.isPresent()){
+
+            User user = optionalUser.get();
+
+            if (userService.verifyPassword(body.password(), user.getPassword())){
+                String token = this.tokenService.generateToken(user);
+                return ResponseEntity.ok(new UserResponseDTO(user, token));
+            }
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong password");
+
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+    }
+
+    @PutMapping("/auth/updatePassword")
+    public ResponseEntity<Object> updatePassword(@RequestBody UserRequestDTO body){
+
+        User user = this.userService.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("User not found"));
+
+        return ResponseEntity.ok(userService.updatePassword(user, body.password()));
+
     }
 
 }
