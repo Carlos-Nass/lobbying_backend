@@ -24,6 +24,9 @@ public class UserController {
 
     @PostMapping("/auth/register")
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO body){
+
+        this.userService.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("User already exists"));
+
         User newUser = this.userService.createUser(body);
         String token = this.tokenService.generateToken(newUser);
         return ResponseEntity.ok(new UserResponseDTO(newUser, token));
@@ -36,6 +39,9 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user){
+
+        this.userService.findByEmail(user.getEmail()).orElseThrow(() -> new RuntimeException("User not found"));
+
         User updateUser = userService.updateUser(id, user);
         return new ResponseEntity<>(updateUser, HttpStatus.OK);
     }
