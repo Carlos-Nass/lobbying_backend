@@ -12,7 +12,10 @@ public class AnswerService {
     private AnswerRepository answerRepository;
 
     public void saveAnswers(List<Answer> answers) {
-        answerRepository.saveAll(answers);
+        this.answerRepository.saveAll(answers);
+
+
+
     }
 }
 
