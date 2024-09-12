@@ -6,25 +6,22 @@ import org.springframework.web.client.RestTemplate;
 
 public class GeminiAPIService {
 
-    private static final String API_KEY = "AIzaSyAqyHGPub9JApckY5E2BvOy57WsCwYdHSU";
-    private static final String REQUEST_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=%s";
+    private static final String API_KEY = "AIzaSyCuHSvSo3u6KrJiMKpUZTxSeQcBFAe6FC8";
+    private static final String REQUEST_URL = "https://generativelanguage.googleapis.com/v1beta2/models/gemini-1.5-flash-001:generateMessage";
 
     public static void main(String[] args) {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        // Formata a URL com a chave de API
         String url = String.format(REQUEST_URL, API_KEY);
 
-        // Novo formato de payload para o pedido correto
-        String jsonInputString = "{text: Ola gemini}";
+        String jsonInputString = "{ \"prompt\": { \"messages\": [{ \"content\": \"Olá, Gemini!\" }] } }";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<String> requestEntity = new HttpEntity<>(jsonInputString, headers);
 
-        // Tenta fazer a requisição
         try {
             ResponseEntity<String> response = restTemplate.exchange(
                     url,
@@ -33,7 +30,6 @@ public class GeminiAPIService {
                     String.class
             );
 
-            // Verifica a resposta
             if (response.getStatusCode() == HttpStatus.OK) {
                 System.out.println("Resposta da API: " + response.getBody());
             } else {
@@ -45,6 +41,7 @@ public class GeminiAPIService {
         }
     }
 }
+
 
 
 
