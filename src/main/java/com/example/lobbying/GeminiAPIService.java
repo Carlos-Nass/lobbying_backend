@@ -1,21 +1,33 @@
 package com.example.lobbying;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 public class GeminiAPIService {
 
-    private static final String API_KEY = "AIzaSyCuHSvSo3u6KrJiMKpUZTxSeQcBFAe6FC8";
-    private static final String REQUEST_URL = "https://generativelanguage.googleapis.com/v1beta2/models/gemini-1.5-flash-001:generateMessage";
+    @Value("${api.key}")
+    private static String API_KEY;
+
+    private static final String REQUEST_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyC-utzVplVNldc2crvuVA1KVrDaqeOpY2M";
 
     public static void main(String[] args) {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String url = String.format(REQUEST_URL, API_KEY);
-
-        String jsonInputString = "{ \"prompt\": { \"messages\": [{ \"content\": \"Olá, Gemini!\" }] } }";
+        String jsonInputString = """
+                {
+                  "contents": [
+                    {
+                      "parts": [
+                        {
+                          "text": "Explique como o Gemini funciona"
+                        }
+                      ]
+                    }
+                  ]
+                }""";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -23,8 +35,11 @@ public class GeminiAPIService {
         HttpEntity<String> requestEntity = new HttpEntity<>(jsonInputString, headers);
 
         try {
+
+            String requestUrl = String.format(REQUEST_URL, API_KEY);
+
             ResponseEntity<String> response = restTemplate.exchange(
-                    url,
+                    requestUrl,
                     HttpMethod.POST,
                     requestEntity,
                     String.class
