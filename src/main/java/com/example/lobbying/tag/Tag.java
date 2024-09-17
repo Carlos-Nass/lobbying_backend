@@ -1,5 +1,6 @@
 package com.example.lobbying.tag;
 
+import com.example.lobbying.personalityTest.PersonalityTraitModel;
 import com.example.lobbying.user.User;
 import com.example.lobbying.vacancy.Vacancy;
 import jakarta.persistence.*;
@@ -25,4 +26,9 @@ public class Tag {
 
     @ManyToMany(mappedBy = "tags")
     List<Vacancy> vacancies;
+
+    @ManyToOne
+    @JoinColumn(name = "personality_trait_id")
+    private PersonalityTraitModel personalityTrait;
+
 }

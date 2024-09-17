@@ -1,6 +1,9 @@
 package com.example.lobbying.controller;
 
+import com.example.lobbying.personalityTest.PersonalityTraitDTO;
+import com.example.lobbying.personalityTest.PersonalityTraitService;
 import com.example.lobbying.personalityTest.answer.Answer;
+import com.example.lobbying.personalityTest.answer.AnswerDTO;
 import com.example.lobbying.personalityTest.answer.AnswerService;
 import com.example.lobbying.personalityTest.question.Question;
 import com.example.lobbying.personalityTest.question.QuestionService;
@@ -20,6 +23,9 @@ public class PersonalityTestController {
     @Autowired
     private AnswerService answerService;
 
+    @Autowired
+    private PersonalityTraitService personalityTraitService;
+
     @GetMapping("/questions")
     public List<Question> getQuestions() {
         return questionService.getAllQuestions();
@@ -29,6 +35,16 @@ public class PersonalityTestController {
     public ResponseEntity<?> submitAnswers(@RequestBody List<Answer> answers) {
         answerService.saveAnswers(answers);
         return ResponseEntity.ok("Answers submitted successfully.");
+    }
+
+    @PostMapping("/generate-personality")
+    public void generatePersonality(@RequestBody AnswerDTO dto) {
+        this.personalityTraitService.generatePersonality(dto);
+    }
+
+    @PostMapping("/create-personality-trait")
+    public void createPersonality(@RequestBody PersonalityTraitDTO dto) {
+        this.personalityTraitService.createPersonality(dto);
     }
 }
 

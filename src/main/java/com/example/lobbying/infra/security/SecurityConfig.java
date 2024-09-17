@@ -47,6 +47,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/user/{id}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/user/auth/login").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/user/auth/updatePassword").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/personality-test/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/vacancy/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);

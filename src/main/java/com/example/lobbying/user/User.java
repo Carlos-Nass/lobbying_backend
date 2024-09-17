@@ -1,5 +1,7 @@
 package com.example.lobbying.user;
 
+import com.example.lobbying.personalityTest.PersonalityTrait;
+import com.example.lobbying.personalityTest.PersonalityTraitModel;
 import com.example.lobbying.tag.Tag;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,6 +24,10 @@ public class User {
     private String email;
     private String password;
     private Integer role;
+
+    @Enumerated
+    @Column(name = "personality_trait", nullable = true)
+    private PersonalityTrait personalityTrait;
 
     @ManyToMany
     @JoinTable(name = "users_tags",
