@@ -21,14 +21,17 @@ public class UserController {
     private TokenService tokenService;
 
     @PostMapping("/auth/register")
-    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO body){
+	public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO body) {
+		Optional<User> optUser = this.userService.findByEmail(body.email());
+		if (optUser.isPresent()) {
+			throw new RuntimeException("User already exists");
+		}
 
-        this.userService.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("User already exists"));
+		User newUser = this.userService.createUser(body);
+		String token = this.tokenService.generateToken(newUser);
 
-        User newUser = this.userService.createUser(body);
-        String token = this.tokenService.generateToken(newUser);
-        return ResponseEntity.ok(new UserResponseDTO(newUser, token));
-    }
+		return ResponseEntity.ok(new UserResponseDTO(newUser, token));
+	}
 
     @GetMapping
     public List<User> getAll(){
@@ -46,7 +49,8 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
-        userService.deleteUser(id);
+        this.userService.deleteUser(id);
+
         return ResponseEntity.noContent().build();
     }
 
@@ -55,16 +59,15 @@ public class UserController {
         Optional<User> optionalUser = this.userService.findByEmail(body.email());
 
         if (optionalUser.isPresent()){
-
             User user = optionalUser.get();
 
-            if (userService.verifyPassword(body.password(), user.getPassword())){
+            if (this.userService.verifyPassword(body.password(), user.getPassword())){
                 String token = this.tokenService.generateToken(user);
+
                 return ResponseEntity.ok(new UserResponseDTO(user, token));
             }
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong password");
-
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
@@ -76,7 +79,6 @@ public class UserController {
         User user = this.userService.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("User not found"));
 
         return ResponseEntity.ok(userService.updatePassword(user, body.password()));
-
     }
 
 }

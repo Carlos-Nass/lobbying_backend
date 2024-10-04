@@ -56,11 +56,14 @@ public class PersonalityTraitService {
             throw new RuntimeException("Ocorreu um erro ao buscar usuário");
         }
 
-        PersonalityTraitModel trait = this.personalityTraitRepository.findByPersonalityTrait(personalityTrait);
+        Optional<PersonalityTraitModel> optTrait = this.personalityTraitRepository.findByPersonalityTrait(personalityTrait);
+        if(optTrait.isEmpty()) {
+        	throw new RuntimeException("Traço não encontrado.");
+        }
 
         User user = optionalUser.get();
-        user.setPersonalityTrait(trait.getPersonalityTrait());
-        user.setTags(new ArrayList<>(trait.getTags()));
+        user.setPersonalityTrait(optTrait.get().getPersonalityTrait());
+        user.setTags(new ArrayList<>(optTrait.get().getTags()));
 
         this.userRepository.save(user);
     }

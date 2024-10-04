@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,13 +33,15 @@ public class VacancyService {
         Vacancy newVacancy = new Vacancy();
         newVacancy.setTitle(data.title());
         newVacancy.setDescription(data.description());
+        newVacancy.setCreationDate(LocalDate.now());
+        newVacancy.setUrlForm(data.urlForm());
 
         if (!CollectionUtils.isEmpty(data.tagIds())) {
             List<Tag> tags = this.tagRepository.findAllByIdIn(data.tagIds());
             newVacancy.setTags(tags);
         }
 
-        this.repository.save(newVacancy);
+        newVacancy = this.repository.save(newVacancy);
 
         return new VacancyResponseDTO(newVacancy);
     }
@@ -77,8 +80,11 @@ public class VacancyService {
         return vacancies.stream().map(vacancy -> {
             VacancyDTO vac = new VacancyDTO();
             vac.setId(vacancy.getId());
-            vac.setName(vacancy.getTitle());
+            vac.setTitle(vacancy.getTitle());
+            vac.setDescription(vacancy.getDescription());
             vac.setTags(vacancy.getTags().stream().map(tag -> new GenericDTO(tag.getId(), tag.getName())).toList());
+            vac.setCreatedAt(vacancy.getCreationDate());
+            vac.setUrlForm(vacancy.getUrlForm());
 
             return vac;
         }).toList();

@@ -4,6 +4,7 @@ import com.example.lobbying.tag.Tag;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Table(name = "vacancy")
@@ -14,15 +15,20 @@ import java.util.List;
 @AllArgsConstructor
 public class Vacancy {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String title;
-    private String description;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToMany
-    @JoinTable(name = "vacancy_tags",
-            joinColumns = @JoinColumn(name = "id_vacancy"),
-            inverseJoinColumns = @JoinColumn(name = "id_tags"))
-    List<Tag> tags;
+	private String title;
+
+	private String description;
+
+	private LocalDate creationDate;
+
+	private String urlForm;
+
+	@ManyToMany
+	@JoinTable(name = "vacancy_tags", joinColumns = @JoinColumn(name = "id_vacancy"), inverseJoinColumns = @JoinColumn(name = "id_tags"))
+	List<Tag> tags;
 
 }

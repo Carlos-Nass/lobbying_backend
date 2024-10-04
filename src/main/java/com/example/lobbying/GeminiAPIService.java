@@ -3,22 +3,15 @@ package com.example.lobbying;
 import com.example.lobbying.personalityTest.PersonalityTrait;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 @Service
 public class GeminiAPIService {
 
-    @Value("${api.key}")
-    private static String API_KEY;
-
-    private static final String REQUEST_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyC-utzVplVNldc2crvuVA1KVrDaqeOpY2M";
+    private static final String REQUEST_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyDqt0lSWc1jFSsey8yPVg-RBfZIUQh2LGo";
 
     public PersonalityTrait doCallGemini(String question) {
         RestTemplate restTemplate = new RestTemplate();
@@ -47,10 +40,8 @@ public class GeminiAPIService {
 
         try {
 
-            String requestUrl = String.format(REQUEST_URL, API_KEY);
-
             ResponseEntity<String> response = restTemplate.exchange(
-                    requestUrl,
+            		REQUEST_URL,
                     HttpMethod.POST,
                     requestEntity,
                     String.class
