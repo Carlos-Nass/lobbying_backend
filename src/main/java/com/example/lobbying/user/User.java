@@ -1,7 +1,6 @@
 package com.example.lobbying.user;
 
 import com.example.lobbying.personalityTest.PersonalityTrait;
-import com.example.lobbying.personalityTest.PersonalityTraitModel;
 import com.example.lobbying.tag.Tag;
 import jakarta.persistence.*;
 import lombok.*;

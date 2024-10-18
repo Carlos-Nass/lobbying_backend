@@ -8,10 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.logging.Logger;
+
 @Service
 public class GeminiAPIService {
 
     private static final String REQUEST_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyDqt0lSWc1jFSsey8yPVg-RBfZIUQh2LGo";
+
+    Logger logger = Logger.getLogger(getClass().getName());
 
     public PersonalityTrait doCallGemini(String question) {
         RestTemplate restTemplate = new RestTemplate();
@@ -64,8 +68,8 @@ public class GeminiAPIService {
                 throw new RuntimeException("Ocorreu um erro ao gerar teste de personalidade");
             }
         } catch (HttpClientErrorException e) {
-            System.out.println("Erro na requisição: " + e.getMessage());
-            System.out.println("Resposta do servidor: " + e.getResponseBodyAsString());
+            logger.info("Erro na requisição: " + e.getMessage());
+            logger.info("Resposta do servidor: " + e.getResponseBodyAsString());
 
             throw new RuntimeException("Ocorreu um erro ao gerar teste de personalidade");
         }

@@ -1,7 +1,6 @@
 package com.example.lobbying.personalityTest;
 
 import com.example.lobbying.tag.Tag;
-import com.example.lobbying.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
 

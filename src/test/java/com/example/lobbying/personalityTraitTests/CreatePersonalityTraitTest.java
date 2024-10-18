@@ -30,7 +30,7 @@ public class CreatePersonalityTraitTest {
     }
 
     @Test
-    public void testCreatePersonality() {
+    void testCreatePersonality() {
         PersonalityTraitDTO dto = new PersonalityTraitDTO();
         dto.setTrait(PersonalityTrait.OPENNESS);
         dto.setTagIds(List.of(1L, 2L));

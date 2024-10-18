@@ -42,7 +42,7 @@ public class GeneratePersonalityTraitTest {
     }
 
     @Test
-    public void testGeneratePersonality() {
+    void testGeneratePersonality() {
         AnswerDTO dto = new AnswerDTO();
         dto.setUserId(1L);
         dto.setQuestions(List.of(new QuestionDTO()));
@@ -64,7 +64,7 @@ public class GeneratePersonalityTraitTest {
     }
 
     @Test
-    public void testGeneratePersonality_UserNotFound() {
+    void testGeneratePersonality_UserNotFound() {
         AnswerDTO dto = new AnswerDTO();
         dto.setUserId(1L);
         dto.setQuestions(List.of(new QuestionDTO()));
@@ -75,7 +75,7 @@ public class GeneratePersonalityTraitTest {
     }
 
     @Test
-    public void testGeneratePersonality_TraitNotFound() {
+    void testGeneratePersonality_TraitNotFound() {
         AnswerDTO dto = new AnswerDTO();
         dto.setUserId(1L);
         dto.setQuestions(List.of(new QuestionDTO()));

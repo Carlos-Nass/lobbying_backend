@@ -19,7 +19,6 @@ public class TagController {
     @GetMapping
     public List<TagResponseDTO> getAll(){
 
-        List<TagResponseDTO> tagList = repository.findAll().stream().map(TagResponseDTO::new).toList();
-        return tagList;
+        return repository.findAll().stream().map(TagResponseDTO::new).toList();
     }
 }

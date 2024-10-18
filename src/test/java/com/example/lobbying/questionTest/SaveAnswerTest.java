@@ -27,7 +27,7 @@ public class SaveAnswerTest {
     }
 
     @Test
-    public void testSaveAnswers() {
+    void testSaveAnswers() {
         Answer answer1 = new Answer();
         Answer answer2 = new Answer();
         List<Answer> answers = List.of(answer1, answer2);

@@ -28,7 +28,7 @@ public class GetAllAnswerTest {
     }
 
     @Test
-    public void testGetAllQuestions() {
+    void testGetAllQuestions() {
         Question question1 = new Question();
         Question question2 = new Question();
         List<Question> questions = List.of(question1, question2);
