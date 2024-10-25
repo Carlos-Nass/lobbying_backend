@@ -36,12 +36,16 @@ class VacancyServiceUpdateVacancyTest {
         vacancy.setDescription("Description");
         vacancy.setTags(new ArrayList<>());
 
-        VacancyRequestDTO requestDTO = new VacancyRequestDTO(1L, "Updated Title", "Updated Description", List.of(1L, 2L), "urlForm");
+        Vacancy requestDTO = new Vacancy();
+        vacancy.setId(1L);
+        vacancy.setTitle("Updated Title");
+        vacancy.setDescription("Updated Description");
+        vacancy.setTags(new ArrayList<>());
 
         when(vacancyRepository.findById(1L)).thenReturn(Optional.of(vacancy));
         when(vacancyRepository.save(any(Vacancy.class))).thenReturn(vacancy);
 
-        Vacancy updatedVacancy = vacancyService.updateVacancy(1L, vacancy);
+        Vacancy updatedVacancy = vacancyService.updateVacancy(1L, requestDTO);
 
         assertEquals("Updated Title", updatedVacancy.getTitle());
         assertEquals("Updated Description", updatedVacancy.getDescription());
