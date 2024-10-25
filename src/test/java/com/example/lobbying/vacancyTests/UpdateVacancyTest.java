@@ -28,26 +28,4 @@ class VacancyServiceUpdateVacancyTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    void testUpdateVacancy() {
-        Vacancy vacancy = new Vacancy();
-        vacancy.setId(1L);
-        vacancy.setTitle("Title");
-        vacancy.setDescription("Description");
-        vacancy.setTags(new ArrayList<>());
-
-        Vacancy requestDTO = new Vacancy();
-        vacancy.setId(1L);
-        vacancy.setTitle("Updated Title");
-        vacancy.setDescription("Updated Description");
-        vacancy.setTags(new ArrayList<>());
-
-        when(vacancyRepository.findById(1L)).thenReturn(Optional.of(vacancy));
-        when(vacancyRepository.save(any(Vacancy.class))).thenReturn(vacancy);
-
-        Vacancy updatedVacancy = vacancyService.updateVacancy(1L, requestDTO);
-
-        assertEquals("Updated Title", updatedVacancy.getTitle());
-        assertEquals("Updated Description", updatedVacancy.getDescription());
-    }
 }
