@@ -3,6 +3,7 @@ package com.example.lobbying;
 import com.example.lobbying.personalityTest.PersonalityTrait;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -13,7 +14,14 @@ import java.util.logging.Logger;
 @Service
 public class GeminiAPIService {
 
-    private static final String REQUEST_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyDqt0lSWc1jFSsey8yPVg-RBfZIUQh2LGo";
+    @Value("${gemini.api.key}")
+    private String API_KEY;
+
+    private static final String REQUEST_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=";
+
+    private String getRequestUrl(){
+        return REQUEST_URL + API_KEY;
+    }
 
     Logger logger = Logger.getLogger(getClass().getName());
 
@@ -45,7 +53,7 @@ public class GeminiAPIService {
         try {
 
             ResponseEntity<String> response = restTemplate.exchange(
-            		REQUEST_URL,
+                    getRequestUrl(),
                     HttpMethod.POST,
                     requestEntity,
                     String.class
