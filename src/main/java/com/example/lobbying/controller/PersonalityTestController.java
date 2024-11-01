@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/personality-test")
+@RequestMapping("/personality-test")
 public class PersonalityTestController {
 
     @Autowired
