@@ -22,7 +22,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-public class GeneratePersonalityTraitTest {
+class GeneratePersonalityTraitTest {
 
     @Mock
     private PersonalityTraitRepository personalityTraitRepository;

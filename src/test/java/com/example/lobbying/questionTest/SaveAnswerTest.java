@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 
-public class SaveAnswerTest {
+class SaveAnswerTest {
 
     @Mock
     private AnswerRepository answerRepository;
