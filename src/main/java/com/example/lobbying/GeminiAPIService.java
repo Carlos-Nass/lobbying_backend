@@ -35,10 +35,10 @@ public class GeminiAPIService {
                   "parts": [
                     {
                       "text": "Baseado nessas perguntas e respostas: %s. 
-                      Levando em conta o teste de personalidade DISC, me devolva SOMENTE essas respectivas ENUMs que 
-                      correspondem a personalidade desse individuo OPENNESS, CONSCIENTIOUSNESS, EXTRAVERSION, AGREEABLENESS, NEUROTICISM.
-                      preciso que me devolva somente a ENUM, sem texto explicando, e quero também que me devolva a ENUM que tem o nivel alto de relação com a pessoa,
-                      quero apenas um resultado, o que for mais associado a pessoa, quero que a resposta seja literalmente e somente a ENUM, quero somente o maior resultado."
+                      Com base nas respostas às perguntas e respostas fornecidas, 
+                      e considerando os traços do teste de personalidade BigFive relacionados aos cinco fatores de personalidade (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism), 
+                      me devolva somente o traço correspondente ao fator que apresenta o nível mais alto de associação com a pessoa. 
+                      Retorne SOMENTE o nome do traço BigFive como resultado, sem qualquer explicação, texto adicional ou traço que não faça parte dos 5 fatores a cima"
                     }
                   ]
                 }
