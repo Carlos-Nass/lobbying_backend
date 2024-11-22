@@ -31,7 +31,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         var login = tokenService.validateToken(token);
 
         String requestURI = request.getRequestURI();
-        if (requestURI.startsWith("/swagger-ui") || requestURI.startsWith("/v3/api-docs")) {
+        if (requestURI.contains("/swagger-ui") || requestURI.contains("/v3/api-docs")) {
             filterChain.doFilter(request, response);
             return;
         }
